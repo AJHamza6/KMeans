@@ -1,5 +1,8 @@
 import numpy as np
 from random import sample
+from sklearn.datasets import make_blobs
+import matplotlib.pyplot as plt
+from sklearn.metrics import silhouette_score
 
 class KMeans:
     def __init__(self, k=3, max_iterations=100):
@@ -41,3 +44,34 @@ class KMeans:
             closest_centroid = distances.index(min(distances))
             predictions.append(closest_centroid)
         return predictions
+
+
+# Generate some data to train the model
+data, true_labels = make_blobs(n_samples=300, centers=4, cluster_std=0.60, random_state=0)
+
+# Visualize the Data
+plt.figure(figsize=(8, 6))
+plt.scatter(data[:, 0], data[:, 1], c=true_labels, cmap='viridis', marker='o', edgecolor='k')
+plt.title('Visualization of the data Distribution')
+plt.xlabel('Feature 1')
+plt.ylabel('Feature 2')
+plt.colorbar(label = 'Cluster Label (True)')
+plt.show()
+
+# Initialize and train the KMeans model
+kmeans = KMeans(k=4)
+kmeans.fit(data)
+
+
+# Predicting the clusters
+clusters = kmeans.predict(data)
+
+
+# Visualize the clusters
+plt.scatter(data[:, 0], data[:, 1], c=clusters, cmap='viridis')
+centroids = np.array(kmeans.centroids)
+plt.scatter(centroids[:, 0], centroids[:, 1], s=300, c='red', marker='x')
+plt.title('Data points and centroids')
+plt.show()
+
+
