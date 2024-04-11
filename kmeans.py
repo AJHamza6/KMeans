@@ -2,7 +2,6 @@ import numpy as np
 from random import sample
 from sklearn.datasets import make_blobs
 import matplotlib.pyplot as plt
-from sklearn.metrics import silhouette_score
 
 class KMeans:
     def __init__(self, k=3, max_iterations=100):
